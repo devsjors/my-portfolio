@@ -1,0 +1,19 @@
+.homepage {
+    &__intro {
+        height: 100vh;
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: $space-8;
+        }
+    }
+    &__about {
+        height: 100vh;
+    }
+    &__contact {
+        height: 100vh;
+    }
+    &__works {
+        height: 100vh;
+    }
+}

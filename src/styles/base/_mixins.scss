@@ -1,0 +1,12 @@
+@mixin hyphenate($lines) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+    @supports (hyphens: auto) or (-webkit-hyphens: auto) {
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+    }
+}
