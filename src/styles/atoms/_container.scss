@@ -1,0 +1,24 @@
+.container__inner {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 $space-4;
+    @include screen($screen-sm) {
+        padding: 0 $space-8;
+        max-width: 640px;
+    }
+    @include screen($screen-md) {
+        max-width: 768px;
+    }
+    @include screen($screen-lg) {
+        padding: 0 $space-16;
+        max-width: 1024px;
+    }
+    @include screen($screen-xl) {
+        padding: 0 $space-20;
+        max-width: 1280px;
+    }
+    @include screen($screen-2xl) {
+        padding: 0 $space-24;
+        max-width: 1536px;
+    }
+}

@@ -1,0 +1,17 @@
+@import "./base";
+@import "./atoms";
+@import "./components";
+@import "./pages";
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $base-black;
+    background: $base-white;
+}
+
+main > *:first-child {
+    padding-top: $space-18;
+}

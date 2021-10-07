@@ -1,0 +1,27 @@
+.heading {
+    text-align: center;
+    margin: 0 auto;
+    &--large {
+        font-family: $font-title;
+        font-size: $text-3xl;
+        font-weight: $font-extrabold;
+        line-height: $leading-normal;
+        letter-spacing: -0.025em;
+        max-width: $max-w-sm;
+        @include screen($screen-sm) {
+            font-size: $text-4xl;
+            line-height: $leading-normal;
+            max-width: $max-w-lg;
+        }
+        @include screen($screen-lg) {
+            font-size: $text-5xl;
+            line-height: $leading-tight;
+            max-width: $max-w-xl;
+        }
+        @include screen($screen-xl) {
+            font-size: $text-6xl;
+            line-height: $leading-snug;
+            max-width: $max-w-3xl;
+        }
+    }
+}
