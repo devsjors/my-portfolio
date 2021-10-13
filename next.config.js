@@ -1,3 +1,6 @@
 module.exports = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    images: {
+        domains: ["portfolio-sjors-eveleens.cdn.prismic.io"],
+    },
+};

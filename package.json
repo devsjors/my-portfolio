@@ -10,10 +10,18 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "@prismicio/client": "^5.1.0",
         "animejs": "^3.2.1",
+        "apollo-cache-inmemory": "^1.6.6",
+        "apollo-client": "^2.6.10",
+        "apollo-link-prismic": "^1.0.9",
+        "graphql": "^15.6.1",
+        "graphql-tag": "^2.12.5",
         "next": "11.1.2",
+        "prismic-dom": "^2.2.6",
         "react": "17.0.2",
         "react-dom": "17.0.2",
+        "react-inlinesvg": "^2.3.0",
         "sass": "^1.42.1"
     },
     "devDependencies": {

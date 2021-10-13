@@ -6,6 +6,11 @@
     padding: 0;
 }
 
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
 /**
  * 1. Add border box sizing in all browsers (opinionated).
  * 2. Backgrounds do not repeat by default (opinionated).
@@ -58,6 +63,7 @@
 
 :where(body) {
     margin: 0;
+    overflow: hidden;
 }
 
 /**

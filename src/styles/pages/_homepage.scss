@@ -2,6 +2,7 @@
     &__intro {
         height: 100vh;
         .cards {
+            position: relative;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: $space-8;

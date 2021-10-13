@@ -1,14 +1,18 @@
-const Card = () => {
+import PrismicDom from "prismic-dom";
+import Link from "next/link";
+
+const Card = ({ title, intro_text, uid, ...props }) => {
     return (
-        <article className="card">
-            <h3 className="card__title">Card</h3>
-            <p className="card__excerpt">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable.
-            </p>
-        </article>
+        <Link href={`/articles/${uid}`}>
+            <a className="card" {...props}>
+                <h3 className="card__title">
+                    {PrismicDom.RichText.asText(title)}
+                </h3>
+                <p className="card__excerpt">
+                    {PrismicDom.RichText.asText(intro_text)}
+                </p>
+            </a>
+        </Link>
     );
 };
 
