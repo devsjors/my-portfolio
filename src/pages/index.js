@@ -1,4 +1,4 @@
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useRef } from "react";
 import anime from "animejs";
 import client from "@/utils/prismic-api";
@@ -8,7 +8,7 @@ import Card from "@/components/card";
 import Skill from "@/components/skill";
 
 const Index = ({ data }) => {
-    // const router = useRouter();
+    const router = useRouter();
     const cardsContainer = useRef(null);
 
     const {
@@ -21,7 +21,7 @@ const Index = ({ data }) => {
         seo_description: "Homepage",
     };
 
-    const pageTransition = (event) => {
+    const pageTransition = (event, uid) => {
         event.preventDefault();
         const el = event.currentTarget;
         const container = cardsContainer.current;
@@ -29,37 +29,32 @@ const Index = ({ data }) => {
         const containerFromLeft = container.getBoundingClientRect().left;
 
         el.classList.add("animate-grow");
+
         container.querySelectorAll("a:not(.animate-grow)").forEach((child) => {
             child.style.position = "absolute";
             child.style.zIndex = "-1";
         });
 
-        // const padding = (value) => {
-
-        // }
+        const padding = () => {
+            const { paddingLeft } = getComputedStyle(el);
+            return paddingLeft;
+        };
 
         anime({
             targets: el,
             width: "100vw",
-            easing: "linear",
             translateX: [
                 elementFromLeft - containerFromLeft,
                 -containerFromLeft,
             ],
-            // padding: ,
-            update: (animation) => {
-                const spacing = (containerFromLeft / 100) * animation.progress;
-                el.style.paddingRight = `${spacing}px`;
-                if (spacing > 24) {
-                    el.style.paddingLeft = `${spacing}px`;
-                }
-            },
-            // easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
-            duration: 2000,
+            paddingLeft: [padding(), containerFromLeft],
+            paddingRight: [padding(), containerFromLeft],
+            easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
+            duration: 800,
         }).finished.then(() => {
             console.log("finished");
             el.classList.remove("animate");
-            // router.push(`/articles/${uid}`);
+            router.push(`/articles/${uid}`);
         });
     };
 
