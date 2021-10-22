@@ -23,44 +23,46 @@ const Index = ({ data }) => {
 
     const pageTransition = (event, uid) => {
         event.preventDefault();
+        const { current: container } = cardsContainer;
         const el = event.currentTarget;
-        const container = cardsContainer.current;
-        const elementFromLeft = el.getBoundingClientRect().left;
-        const containerFromLeft = container.getBoundingClientRect().left;
+        const clonedEl = el.cloneNode(true);
+        container.appendChild(clonedEl);
 
-        el.classList.add("animate-grow");
+        const { width, height, paddingTop, paddingLeft } = getComputedStyle(el);
+        const { top: elementTop, left: elementLeft } = el.getBoundingClientRect();
+        const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
 
-        container.querySelectorAll("a:not(.animate-grow)").forEach((child) => {
-            child.style.position = "absolute";
-            child.style.zIndex = "-1";
+        Object.assign(clonedEl.style, {
+            width: width,
+            height: height,
+            position: "absolute",
+            top: `${elementTop}px`,
+            left: `${elementLeft}px`,
+            zIndex: 100,
         });
 
-        const padding = () => {
-            const { paddingLeft } = getComputedStyle(el);
-            return paddingLeft;
-        };
-
-        anime({
-            targets: el,
-            width: "100vw",
-            translateX: [
-                elementFromLeft - containerFromLeft,
-                -containerFromLeft,
-            ],
-            paddingLeft: [padding(), containerFromLeft],
-            paddingRight: [padding(), containerFromLeft],
-            easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
-            duration: 800,
-        }).finished.then(() => {
-            console.log("finished");
-            el.classList.remove("animate");
-            router.push(`/articles/${uid}`);
-        });
+        anime
+            .timeline({
+                targets: clonedEl,
+                easing: "linear",
+                duration: 800,
+                complete: () => router.push(`/articles/${uid}`),
+            })
+            .add({
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
+                paddingLeft: [paddingLeft, containerLeft],
+                paddingRight: [paddingLeft, containerLeft],
+                borderRadius: 0,
+            });
     };
 
     return (
-        <Layout seo={seo} className="homepage">
-            <section id="home" className="container__inner homepage__intro">
+        <Layout seo={seo} data-slug="home">
+            <section id="home" className="container__inner intro">
                 <div ref={cardsContainer} className="cards">
                     {articles.map((article) => {
                         const {
@@ -96,16 +98,13 @@ const Index = ({ data }) => {
                     })}
                 </div>
             </section>
-            <div id="about" className="container homepage__about">
+            <div id="about" className="container about">
                 <section className="container__inner">About</section>
             </div>
-            <section
-                id="contact"
-                className="container__inner homepage__contact"
-            >
+            <section id="contact" className="container__inner contact">
                 Contact
             </section>
-            <section id="works" className="container__inner homepage__works">
+            <section id="works" className="container__inner works">
                 Works
             </section>
         </Layout>

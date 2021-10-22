@@ -1,20 +1,19 @@
-.homepage {
-    &__intro {
+[data-slug="home"] {
+    .intro {
         height: 100vh;
         .cards {
-            position: relative;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: $space-8;
         }
     }
-    &__about {
+    .about {
         height: 100vh;
     }
-    &__contact {
+    .contact {
         height: 100vh;
     }
-    &__works {
+    .works {
         height: 100vh;
     }
 }

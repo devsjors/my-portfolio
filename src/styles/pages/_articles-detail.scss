@@ -1,6 +1,8 @@
-.articlesDetail {
-    &__intro {
+[data-slug="article-detail"] {
+    .intro {
         color: $base-white;
         background: $primary-green;
+        padding-top: $space-24;
+        min-height: 100vh;
     }
 }
