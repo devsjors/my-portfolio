@@ -12,8 +12,8 @@ const Index = ({ article }) => {
     };
 
     return (
-        <Layout seo={seo} className="articlesDetail">
-            <div className="container articlesDetail__intro">
+        <Layout seo={seo} data-slug="article-detail">
+            <div className="container intro">
                 <section className="container__inner">
                     <h3>{PrismicDom.RichText.asText(title)}</h3>
                     <p>{PrismicDom.RichText.asText(intro_text)}</p>

@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 import Layout from "@/components/layout";
 import Card from "@/components/card";
 import Skill from "@/components/skill";
+import convertPXToVW from "@/modules/convertPXToVW";
 
 const Index = ({ data }) => {
     const router = useRouter();
@@ -25,42 +26,32 @@ const Index = ({ data }) => {
         event.preventDefault();
         const el = event.currentTarget;
         const container = cardsContainer.current;
-        const elementFromLeft = el.getBoundingClientRect().left;
-        const containerFromLeft = container.getBoundingClientRect().left;
-
-        el.classList.add("animate-grow");
-
-        container.querySelectorAll("a:not(.animate-grow)").forEach((child) => {
-            child.style.position = "absolute";
-            child.style.zIndex = "-1";
-        });
-
-        const padding = () => {
-            const { paddingLeft } = getComputedStyle(el);
-            return paddingLeft;
-        };
+        const elementWidth = el.offsetWidth;
+        const { top: elementTop, left: elementLeft } = el.getBoundingClientRect();
+        const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
+        const { paddingLeft, paddingTop } = getComputedStyle(el);
+        el.style.position = "absolute";
 
         anime({
             targets: el,
-            width: "100vw",
-            translateX: [
-                elementFromLeft - containerFromLeft,
-                -containerFromLeft,
-            ],
-            paddingLeft: [padding(), containerFromLeft],
-            paddingRight: [padding(), containerFromLeft],
+            width: [convertPXToVW(elementWidth), "100vw"],
+            height: "100vh",
+            top: [elementTop, 0],
+            left: [elementLeft, 0],
+            paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
+            paddingLeft: [paddingLeft, containerLeft],
+            paddingRight: [paddingLeft, containerLeft],
             easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
             duration: 800,
         }).finished.then(() => {
-            console.log("finished");
             el.classList.remove("animate");
             router.push(`/articles/${uid}`);
         });
     };
 
     return (
-        <Layout seo={seo} className="homepage">
-            <section id="home" className="container__inner homepage__intro">
+        <Layout seo={seo} data-slug="home">
+            <section id="home" className="container__inner intro">
                 <div ref={cardsContainer} className="cards">
                     {articles.map((article) => {
                         const {
@@ -96,16 +87,13 @@ const Index = ({ data }) => {
                     })}
                 </div>
             </section>
-            <div id="about" className="container homepage__about">
+            <div id="about" className="container about">
                 <section className="container__inner">About</section>
             </div>
-            <section
-                id="contact"
-                className="container__inner homepage__contact"
-            >
+            <section id="contact" className="container__inner contact">
                 Contact
             </section>
-            <section id="works" className="container__inner homepage__works">
+            <section id="works" className="container__inner works">
                 Works
             </section>
         </Layout>

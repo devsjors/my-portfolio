@@ -11,22 +11,22 @@ const Header = () => {
                 <nav className="menu__navigation">
                     <ul>
                         <li>
-                            <Link href="/#home">
+                            <Link href="#">
                                 <a>Home</a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/#about">
+                            <Link href="#">
                                 <a>About</a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/#contact">
+                            <Link href="#">
                                 <a>Contact</a>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/#works">
+                            <Link href="#">
                                 <a>Works</a>
                             </Link>
                         </li>

@@ -1,2 +1,6 @@
 @import "./homepage.scss";
 @import "./articles-detail.scss";
+
+[data-slug="home"] {
+    padding-top: $space-18;
+}
