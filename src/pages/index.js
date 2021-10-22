@@ -6,7 +6,6 @@ import gql from "graphql-tag";
 import Layout from "@/components/layout";
 import Card from "@/components/card";
 import Skill from "@/components/skill";
-import convertPXToVW from "@/modules/convertPXToVW";
 
 const Index = ({ data }) => {
     const router = useRouter();
@@ -24,29 +23,41 @@ const Index = ({ data }) => {
 
     const pageTransition = (event, uid) => {
         event.preventDefault();
+        const { current: container } = cardsContainer;
         const el = event.currentTarget;
-        const container = cardsContainer.current;
-        const elementWidth = el.offsetWidth;
+        const clonedEl = el.cloneNode(true);
+        container.appendChild(clonedEl);
+
+        const { width, height, paddingTop, paddingLeft } = getComputedStyle(el);
         const { top: elementTop, left: elementLeft } = el.getBoundingClientRect();
         const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
-        const { paddingLeft, paddingTop } = getComputedStyle(el);
-        el.style.position = "absolute";
 
-        anime({
-            targets: el,
-            width: [convertPXToVW(elementWidth), "100vw"],
-            height: "100vh",
-            top: [elementTop, 0],
-            left: [elementLeft, 0],
-            paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
-            paddingLeft: [paddingLeft, containerLeft],
-            paddingRight: [paddingLeft, containerLeft],
-            easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
-            duration: 800,
-        }).finished.then(() => {
-            el.classList.remove("animate");
-            router.push(`/articles/${uid}`);
+        Object.assign(clonedEl.style, {
+            width: width,
+            height: height,
+            position: "absolute",
+            top: `${elementTop}px`,
+            left: `${elementLeft}px`,
+            zIndex: 100,
         });
+
+        anime
+            .timeline({
+                targets: clonedEl,
+                easing: "linear",
+                duration: 800,
+                complete: () => router.push(`/articles/${uid}`),
+            })
+            .add({
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
+                paddingLeft: [paddingLeft, containerLeft],
+                paddingRight: [paddingLeft, containerLeft],
+                borderRadius: 0,
+            });
     };
 
     return (
