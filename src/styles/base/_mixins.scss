@@ -10,3 +10,9 @@
         -ms-hyphens: auto;
     }
 }
+
+@mixin screen($size) {
+    @media (min-width: $size) {
+        @content;
+    }
+}

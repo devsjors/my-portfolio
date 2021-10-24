@@ -1,0 +1,38 @@
+@mixin headingStyle($weight, $font-small, $font-large) {
+    font-family: $font-title;
+    font-weight: $weight;
+    font-size: $font-small;
+    @include screen($screen-md) {
+        font-size: $font-large;
+    }
+}
+
+@mixin textStyle($family, $weight, $font-size) {
+    font-family: $family;
+    font-weight: $weight;
+    font-size: $font-size;
+}
+
+.heading {
+    &--huge {
+        @include headingStyle($font-black, $text-6xl, $text-7xl);
+    }
+    &--giant {
+        @include headingStyle($font-black, $text-5xl, $text-6xl);
+    }
+    &--epic {
+        @include headingStyle($font-bold, $text-4xl, $text-5xl);
+    }
+    &--large {
+        @include headingStyle($font-bold, $text-3xl, $text-4xl);
+    }
+    &--medium {
+        @include headingStyle($font-medium, $text-2xl, $text-3xl);
+    }
+    &--small {
+        @include headingStyle($font-medium, $text-xl, $text-2xl);
+    }
+    &--tiny {
+        @include headingStyle($font-regular, $text-lg, $text-xl);
+    }
+}

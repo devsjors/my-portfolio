@@ -30,8 +30,9 @@ const Index = ({ data }) => {
 
         const { width, height, paddingTop, paddingLeft } = getComputedStyle(el);
         const { top: elementTop, left: elementLeft } = el.getBoundingClientRect();
-        const { top: containerTop, left: containerLeft } = container.getBoundingClientRect();
+        const { top: containerTop } = container.getBoundingClientRect();
 
+        clonedEl.classList.add("card--animate--grow");
         Object.assign(clonedEl.style, {
             width: width,
             height: height,
@@ -43,21 +44,32 @@ const Index = ({ data }) => {
 
         anime
             .timeline({
-                targets: clonedEl,
-                easing: "linear",
-                duration: 800,
-                complete: () => router.push(`/articles/${uid}`),
+                easing: "cubicBezier(0.25, 0.1, 0.25, 1)",
+                duration: 400,
+                complete: () =>
+                    router.push({
+                        pathname: `/articles/${uid}`,
+                        query: { animate: true },
+                    }),
             })
             .add({
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
-                paddingLeft: [paddingLeft, containerLeft],
-                paddingRight: [paddingLeft, containerLeft],
-                borderRadius: 0,
-            });
+                targets: clonedEl.children,
+                width: parseInt(width) - parseInt(paddingLeft) * 2,
+                opacity: 0,
+            })
+            .add(
+                {
+                    targets: clonedEl,
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    paddingTop: [paddingTop, parseInt(paddingTop) + containerTop],
+                    paddingLeft: parseInt(paddingLeft) + elementLeft,
+                    borderRadius: 0,
+                },
+                "-=250"
+            );
     };
 
     return (
